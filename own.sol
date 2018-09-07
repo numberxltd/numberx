@@ -18,8 +18,40 @@ contract GameX {
     uint maxFee = 1 ether;
     uint minLucky = 0.1 ether;
     uint retryfee = 0.1 ether;
-    uint16 luckynum;
+    uint16 public luckynum;
+    uint16 public fuckynum = 90;
     uint lastnumtime = now;
+    
+    // sta
+    uint public noncex = 1;
+    
+    uint public timeslucky;
+    uint public times8;
+    uint public times9;
+    uint public timesno;
+    uint public timesfucky;
+    uint16 public limit8 = 85;
+    uint16 public limit9 = 95;
+    uint16 public reward8 = 14;
+    uint16 public reward9 = 19;
+    
+    function resetTime(uint16 r8, uint16 r9, uint16 l8, uint16 l9)
+    onlyOwner
+    public {
+        times8 = 0;
+        times9 = 0;
+        timeslucky = 0;
+        timesfucky = 0;
+        timesno = 0;
+        if (r8 > 0)
+            reward8 = r8;
+        if (r9 > 0)
+            reward9 = r9;
+        if (l8 > 0)
+            limit8 = l8;
+        if (l9 > 0)
+            limit9 = l9;
+    }
     
     // one of seed
     uint private lastPlayer;
@@ -108,11 +140,11 @@ contract GameX {
     returns (uint8)
     {
         if (player_[msg.sender].playerTotal == luckynum || player_[msg.sender].playerTotal == 100) {
-            return 1;
+            return 2;
         }
         
         if (player_[msg.sender].playerTotal <= 33 && player_[msg.sender].playerNum.length >= 3) {
-            return 2;
+            return 3;
         }
         return 0;
     }
@@ -126,6 +158,11 @@ contract GameX {
     {
         require(msg.value > 0);
         uint256 amount = msg.value;
+        
+        if (player_[msg.sender].playerGen == 0)
+        {
+            player_[msg.sender].playerNum.length = 0;
+        }
         
         // if got another chance to fetch a card
         
@@ -144,8 +181,8 @@ contract GameX {
         
         if (player_[msg.sender].playerGen > 0)
         {
-            // TODO 修改白皮书
-            require(player_[msg.sender].playerGen * 3 >= msg.value);
+            // TODO
+            require(player_[msg.sender].playerGen.mul(2).mul(_num) >= amount);
         }
         
         if (_retry && _num == 1) {
@@ -153,13 +190,13 @@ contract GameX {
                 player_[msg.sender].playerNum.length > 0 &&
                 player_[msg.sender].hasRetry == false && // not retry yet current round
                 player_[msg.sender].RetryTimes > 0 && // must have a unused aff
-                player_[msg.sender].lastRetryTime <= (now - 6 hours), // retry in max 4 times a day. 6 hours int
+                player_[msg.sender].lastRetryTime <= (now - 1 hours), // retry in max 4 times a day. 1 hours int
                 'retry fee need to be valid'
             );
             
             player_[msg.sender].hasRetry = true;
             player_[msg.sender].RetryTimes --;
-            player_[msg.sender].lastRetryTime == now;
+            player_[msg.sender].lastRetryTime = now;
             
             uint16 lastnum = player_[msg.sender].playerNum[player_[msg.sender].playerNum.length - 1];
             player_[msg.sender].playerTotal -= lastnum;
@@ -168,12 +205,14 @@ contract GameX {
             player_[msg.sender].playerNum.push(100 + lastnum);
         }
         
-        // jackpot got 1% of the amount
-        jackpot += amount / 100;
+        compot += amount.div(100);
+        
+        // jackpot got 99% of the amount
+        jackpot += amount.sub(amount.div(100));
+        
+        player_[msg.sender].playerGen += amount.sub(amount.div(100));
         
         // update player gen pot
-        player_[msg.sender].playerGen += amount - amount / 100;
-        
         // if got a referee , add it
         // if ref valid, then add one more time
         if (
@@ -186,70 +225,56 @@ contract GameX {
             player_[msg.sender].Aff = _ref;
         }
         
-        
+        // random number
         for (uint16 i = 1; i <= _num; i++) {
             uint16 x = randomX(i);
-            
             // push x number to player current round and calculate it
             player_[msg.sender].playerNum.push(x);
             player_[msg.sender].playerTotal += x;
         }
-        // random a number
-        
         
         // lucky get jackpot 2-3%
         uint16 _case = isLuckyGuy();
         if (_case > 0) {
+            timeslucky ++;
             //  win  3.6 * gen
-            player_[msg.sender].playerWin = player_[msg.sender].playerGen * 36 / 10;
-            
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(36).div(10);
             if (amount >= minLucky) {
-                uint jackwin;
-                if (_case == 1) {
-                    // 2% jackpot
-                    jackwin = jackpot.div(50);
-                    player_[msg.sender].playerWin += jackwin;
-                    jackpot -= jackwin;
-                }
-                if (_case == 2) {
-                    // 3% jackpot
-                    jackwin = jackpot.mul(3).div(100);
-                    player_[msg.sender].playerWin += jackwin;
-                    jackpot -= jackwin;
-                }
+                player_[msg.sender].playerWin += jackpot.mul(_case).div(100);
             }
-            resetPlayer();
+            endRound();
             return;
         }
         
         // reset Player if done
-        if (player_[msg.sender].playerTotal > 100) {
-            // 1% of current gen to com
-            uint tocom = player_[msg.sender].playerGen.mul(1).div(100);
-            //comaddr.transfer(tocom);
-            compot += tocom;
+        if (player_[msg.sender].playerTotal > 100 || player_[msg.sender].playerTotal == fuckynum) {
+            timesno ++;
             // rest 99% of cuurent gen to jackpot
-            jackpot -= tocom;
+            uint tocom = player_[msg.sender].playerGen.div(50);
+            compot += tocom;
+            subJackPot(tocom);
             
-            // clean current win
+            if (player_[msg.sender].playerTotal == fuckynum)
+                timesfucky++;
+            
             player_[msg.sender].playerWin = 0;
-            resetPlayer();
+            endRound();
             return;
         }
         
-        if (player_[msg.sender].playerTotal > 95) {
-            // 2.5 gen
-            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(5).div(2);
+        if (player_[msg.sender].playerTotal > limit9) {
+            times9 ++;
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward9).div(10);
             return;
         }
         
-        if (player_[msg.sender].playerTotal > 85) {
-            //  1.5 gen
-            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(3).div(2);
+        if (player_[msg.sender].playerTotal > limit8) {
+            times8 ++;
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward8).div(10);
         }
     }
     
-    event resultlog(address indexed user, uint16[] num, uint16 indexed total, uint gen, uint win, uint time);
+    event resultlog(address indexed user, uint16[] num, uint16 indexed total, uint gen, uint win, uint time, uint16 luckynum, uint16 fuckynum);
     
     function resetPlayer()
     isActivated
@@ -262,7 +287,9 @@ contract GameX {
             player_[msg.sender].playerTotal,
             player_[msg.sender].playerGen,
             player_[msg.sender].playerWin,
-            now
+            now,
+            luckynum,
+            fuckynum
         );
         // reset
         player_[msg.sender].totalGen += player_[msg.sender].playerGen;
@@ -280,17 +307,31 @@ contract GameX {
         
         player_[msg.sender].playerTotal = 0;
         
-        player_[msg.sender].playerNum.length = 0;
+        //player_[msg.sender].playerNum.length = 0;
         
         player_[msg.sender].hasRetry = false;
         
         // current win going to player win pot
         player_[msg.sender].playerWinPot += player_[msg.sender].playerWin;
+        
         player_[msg.sender].playerWin = 0;
         
-        if (luckynum == 0 || lastnumtime + 1 hours > now) {
+        if (luckynum == 0 || lastnumtime + 1 hours <= now) {
             luckynum = randomX(luckynum);
             lastnumtime = now;
+            fuckynum ++;
+            if (fuckynum >= 99)
+                fuckynum = 85;
+        }
+    }
+    
+    function subJackPot(uint _amount)
+    private
+    {
+        if (_amount < jackpot) {
+            jackpot = jackpot.sub(_amount);
+        } else {
+            jackpot = 0;
         }
     }
     
@@ -299,17 +340,16 @@ contract GameX {
     isHuman
     public
     {
-        uint win = player_[msg.sender].playerWin;
-        if (win > 0) {
-            resetPlayer();
+        if (player_[msg.sender].playerTotal == 0) {
             return;
         }
-        if (player_[msg.sender].playerTotal > 0 && player_[msg.sender].playerTotal <= 80) {
-            uint gen = player_[msg.sender].playerGen;
-            jackpot -= gen.div(3);
-            player_[msg.sender].playerWin = gen.div(3);
-            resetPlayer();
+        
+        if (player_[msg.sender].playerTotal <= limit8 && player_[msg.sender].playerWin == 0) {
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.div(3);
         }
+        
+        subJackPot(player_[msg.sender].playerWin);
+        resetPlayer();
     }
     
     function withdraw()
@@ -318,8 +358,8 @@ contract GameX {
     public
     payable
     {
-        (uint pot, uint dev) = getPlayerWin(msg.sender);
-        uint amount = pot + dev;
+        (uint pot, uint mask) = getPlayerWin(msg.sender);
+        uint amount = pot + mask;
         require(amount > 0, 'sorry not enough eth to withdraw');
         
         if (amount > address(this).balance)
@@ -328,6 +368,9 @@ contract GameX {
         msg.sender.transfer(amount);
         player_[msg.sender].playerWinPot = 0;
         player_[msg.sender].totalGen = 0;
+        
+        //jackpot = jackpot.sub(pot);
+        maskpot = maskpot.sub(mask);
     }
     
     
@@ -337,24 +380,35 @@ contract GameX {
     public
     returns (uint16)
     {
-        uint16 x = uint16(keccak256(abi.encodePacked(
+        uint256 x = uint256(keccak256(abi.encodePacked(
                 (block.timestamp).add
                 (block.difficulty).add
                 ((uint256(keccak256(abi.encodePacked(block.coinbase)))) / (now)).add
-                (block.gaslimit).add
                 ((uint256(keccak256(abi.encodePacked(msg.sender)))) / (now)).add
                 (block.number).add
                 (lastPlayer).add
                 (gasleft()).add
+                (block.gaslimit).add
+                (noncex).add
                 (_s)
             )));
         // change of the seed
+        
+        x = x - ((x / 100) * 100);
+        
         if (x > 50) {
             lastPlayer = player_[msg.sender].id;
+        } else {
+            noncex ++;
+            if (noncex > 1000000000)
+                noncex = 1;
         }
-        x = x - ((x / 100) * 100);
-        emit randomlog(msg.sender, x);
-        return x;
+        
+        if (x == 0) {
+            x = 1;
+        }
+        emit randomlog(msg.sender, uint16(x));
+        return uint16(x);
     }
     
     // admin==================================
@@ -387,6 +441,7 @@ contract GameX {
         if (address(this).balance < _com)
             _com = address(this).balance;
         
+        compot = 0;
         _addr.transfer(_com);
     }
     
