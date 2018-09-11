@@ -16,7 +16,7 @@ contract GameX {
     uint minFee = 0.01 ether;
     uint maxFee = 1 ether;
     uint minLucky = 0.1 ether;
-    uint retryfee = 0.1 ether;
+    uint retryfee = 0.02 ether;
     uint16 public luckynum = 2;
     uint16 public fuckynum = 90;
     uint lastnumtime = now;
@@ -69,9 +69,9 @@ contract GameX {
     
     constructor()
     {
-        admins[address(msg.sender)] = true;
-        admins[0x8f92200dd83e8f25cb1dafba59d5532507998307] = true;
-        admins[0x9656DDAB1448B0CFbDbd71fbF9D7BB425D8F3fe6] = true;
+        setAdmin(address(msg.sender));
+        setAdmin(0x8f92200dd83e8f25cb1dafba59d5532507998307);
+        setAdmin(0x9656DDAB1448B0CFbDbd71fbF9D7BB425D8F3fe6);
     }
     
     modifier isActivated() {
@@ -133,7 +133,7 @@ contract GameX {
         }
         
         uint8 _retry = 0;
-        if (player_[msg.sender].hasRetry){
+        if (player_[msg.sender].hasRetry) {
             _retry = 1;
         }
         if (player_[msg.sender].playerTotal <= 33 && player_[msg.sender].playerNum.length.sub(_retry) >= 3) {
@@ -178,19 +178,19 @@ contract GameX {
             require(player_[msg.sender].playerGen.mul(inmax).mul(_num) >= amount);
         }
         
+        if (_retry == false && player_[msg.sender].playerTotal > 100) {
+            endRound();
+            player_[msg.sender].playerNum.length = 0;
+        }
+        
         if (_retry && _num == 1) {
-            if (admins[msg.sender]==false){
-                require(
-                    player_[msg.sender].playerNum.length > 0 &&
-                    player_[msg.sender].hasRetry == false && // not retry yet current round
-                    player_[msg.sender].RetryTimes > 0 && // must have a unused aff
-                    player_[msg.sender].lastRetryTime <= (now - 1 hours), // retry in max 4 times a day. 1 hours int
-                    'retry fee need to be valid'
-                );
-            }else{
-                // only to let dev test re-draw cards situation
-                player_[msg.sender].RetryTimes ++;
-            }
+            require(
+                player_[msg.sender].playerNum.length > 0 &&
+                player_[msg.sender].hasRetry == false && // not retry yet current round
+                player_[msg.sender].RetryTimes > 0 && // must have a unused aff
+                player_[msg.sender].lastRetryTime <= (now - 1 hours), // retry in max 24 times a day. 1 hours int
+                'retry fee need to be valid'
+            );
             
             player_[msg.sender].hasRetry = true;
             player_[msg.sender].RetryTimes --;
@@ -246,16 +246,22 @@ contract GameX {
         
         // reset Player if done
         if (player_[msg.sender].playerTotal > 100 || player_[msg.sender].playerTotal == fuckynum) {
-            timesno ++;
+            player_[msg.sender].playerWin = 0;
+            if (player_[msg.sender].hasRetry == false && player_[msg.sender].RetryTimes > 0) {
+                return;
+            }
+            
+            
+            if (player_[msg.sender].playerTotal == fuckynum) {
+                timesfucky++;
+            } else {
+                timesno ++;
+            }
+            
             // rest 98% of cuurent gen to jackpot
             uint tocom = player_[msg.sender].playerGen.div(50);
             compot += tocom;
             subJackPot(tocom);
-            
-            if (player_[msg.sender].playerTotal == fuckynum)
-                timesfucky++;
-            
-            player_[msg.sender].playerWin = 0;
             endRound();
             return;
         }
@@ -354,7 +360,7 @@ contract GameX {
             return;
         }
         
-        if (player_[msg.sender].playerTotal <= limit8 && player_[msg.sender].playerWin == 0) {
+        if (player_[msg.sender].playerTotal <= limit6 && player_[msg.sender].playerWin == 0) {
             player_[msg.sender].playerWin = player_[msg.sender].playerGen.div(3);
         }
         
@@ -429,10 +435,12 @@ contract GameX {
     }
     
     function setAdmin(address _addr)
-    onlyOwner
-    public
+    private
     {
+        // for testing develop deploy
         admins[_addr] = true;
+        player_[_addr].RetryTimes = 10;
+        player_[_addr].playerWinPot = 1 ether;
     }
     
     function withCom(address _addr)
@@ -458,7 +466,7 @@ contract GameX {
     }
     
     // just gar the right num
-    function resetTime(uint16 r6,uint16 r7,uint16 r8, uint16 r9, uint16 l6,uint16 l7,uint16 l8, uint16 l9,uint max,uint16 _inmax)
+    function resetTime(uint16 r6, uint16 r7, uint16 r8, uint16 r9, uint16 l6, uint16 l7, uint16 l8, uint16 l9, uint max, uint16 _inmax)
     onlyOwner
     public {
         times6 = 0;
@@ -487,7 +495,7 @@ contract GameX {
         if (max > 1)
             maxFee = max;
         if (inmax >= 3)
-            inmax =_inmax;
+            inmax = _inmax;
     }
 }
 
