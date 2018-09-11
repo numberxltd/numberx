@@ -8,7 +8,6 @@ contract GameX {
     string public symbol = "nox";
     
     // dev setting
-    address private comaddr = 0x00Ee2A090Ed7f6066F60C4e9936182fc4a1A6C29;
     mapping(address => bool) admins;
     bool public activated = false;
     uint public compot;
@@ -18,7 +17,7 @@ contract GameX {
     uint maxFee = 1 ether;
     uint minLucky = 0.1 ether;
     uint retryfee = 0.1 ether;
-    uint16 public luckynum;
+    uint16 public luckynum = 2;
     uint16 public fuckynum = 90;
     uint lastnumtime = now;
     
@@ -26,32 +25,21 @@ contract GameX {
     uint public noncex = 1;
     
     uint public timeslucky;
+    uint public times6;
+    uint public times7;
     uint public times8;
     uint public times9;
     uint public timesno;
     uint public timesfucky;
-    uint16 public limit8 = 85;
-    uint16 public limit9 = 95;
-    uint16 public reward8 = 14;
-    uint16 public reward9 = 19;
-    
-    function resetTime(uint16 r8, uint16 r9, uint16 l8, uint16 l9)
-    onlyOwner
-    public {
-        times8 = 0;
-        times9 = 0;
-        timeslucky = 0;
-        timesfucky = 0;
-        timesno = 0;
-        if (r8 > 0)
-            reward8 = r8;
-        if (r9 > 0)
-            reward9 = r9;
-        if (l8 > 0)
-            limit8 = l8;
-        if (l9 > 0)
-            limit9 = l9;
-    }
+    uint16 public limit6 = 79;
+    uint16 public limit7 = 86;
+    uint16 public limit8 = 92;
+    uint16 public limit9 = 97;
+    uint16 public reward6 = 11;
+    uint16 public reward7 = 13;
+    uint16 public reward8 = 16;
+    uint16 public reward9 = 23;
+    uint16 public inmax = 5;
     
     // one of seed
     uint private lastPlayer;
@@ -82,7 +70,8 @@ contract GameX {
     constructor()
     {
         admins[address(msg.sender)] = true;
-        admins[0x00Ee2A090Ed7f6066F60C4e9936182fc4a1A6C29] = true;
+        admins[0x9cA974F2c49d68Bd5958978E81151E6831290F57] = true;
+        admins[0x9656DDAB1448B0CFbDbd71fbF9D7BB425D8F3fe6] = true;
     }
     
     modifier isActivated() {
@@ -140,11 +129,11 @@ contract GameX {
     returns (uint8)
     {
         if (player_[msg.sender].playerTotal == luckynum || player_[msg.sender].playerTotal == 100) {
-            return 2;
+            return 5;
         }
         
         if (player_[msg.sender].playerTotal <= 33 && player_[msg.sender].playerNum.length >= 3) {
-            return 3;
+            return 10;
         }
         return 0;
     }
@@ -182,17 +171,21 @@ contract GameX {
         if (player_[msg.sender].playerGen > 0)
         {
             // TODO
-            require(player_[msg.sender].playerGen.mul(2).mul(_num) >= amount);
+            require(player_[msg.sender].playerGen.mul(inmax).mul(_num) >= amount);
         }
         
         if (_retry && _num == 1) {
-            require(
-                player_[msg.sender].playerNum.length > 0 &&
-                player_[msg.sender].hasRetry == false && // not retry yet current round
-                player_[msg.sender].RetryTimes > 0 && // must have a unused aff
-                player_[msg.sender].lastRetryTime <= (now - 1 hours), // retry in max 4 times a day. 1 hours int
-                'retry fee need to be valid'
-            );
+            if (admins[msg.sender]==false){
+                require(
+                    player_[msg.sender].playerNum.length > 0 &&
+                    player_[msg.sender].hasRetry == false && // not retry yet current round
+                    player_[msg.sender].RetryTimes > 0 && // must have a unused aff
+                    player_[msg.sender].lastRetryTime <= (now - 1 hours), // retry in max 4 times a day. 1 hours int
+                    'retry fee need to be valid'
+                );
+            }else{
+                player_[msg.sender].RetryTimes ++;
+            }
             
             player_[msg.sender].hasRetry = true;
             player_[msg.sender].RetryTimes --;
@@ -271,6 +264,18 @@ contract GameX {
         if (player_[msg.sender].playerTotal > limit8) {
             times8 ++;
             player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward8).div(10);
+            return;
+        }
+    
+        if (player_[msg.sender].playerTotal > limit7) {
+            times7 ++;
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward7).div(10);
+            return;
+        }
+    
+        if (player_[msg.sender].playerTotal > limit6) {
+            times6 ++;
+            player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward6).div(10);
         }
     }
     
@@ -369,7 +374,6 @@ contract GameX {
         player_[msg.sender].playerWinPot = 0;
         player_[msg.sender].totalGen = 0;
         
-        //jackpot = jackpot.sub(pot);
         maskpot = maskpot.sub(mask);
     }
     
@@ -377,7 +381,7 @@ contract GameX {
     event randomlog(address addr, uint16 x);
     
     function randomX(uint16 _s)
-    public
+    private
     returns (uint16)
     {
         uint256 x = uint256(keccak256(abi.encodePacked(
@@ -419,13 +423,6 @@ contract GameX {
         activated = true;
     }
     
-    function setCom(address _addr)
-    onlyOwner
-    public
-    {
-        comaddr = _addr;
-    }
-    
     function setAdmin(address _addr)
     onlyOwner
     public
@@ -453,6 +450,39 @@ contract GameX {
         
         maskpot += amount;
         jackpot -= amount;
+    }
+    
+    // just gar the right num
+    function resetTime(uint16 r6,uint16 r7,uint16 r8, uint16 r9, uint16 l6,uint16 l7,uint16 l8, uint16 l9,uint max,uint16 _inmax)
+    onlyOwner
+    public {
+        times6 = 0;
+        times7 = 0;
+        times8 = 0;
+        times9 = 0;
+        timeslucky = 0;
+        timesfucky = 0;
+        timesno = 0;
+        if (r6 > 0)
+            reward6 = r6;
+        if (r7 > 0)
+            reward7 = r7;
+        if (r8 > 0)
+            reward8 = r8;
+        if (r9 > 0)
+            reward9 = r9;
+        if (l6 > 0)
+            limit6 = l6;
+        if (l7 > 0)
+            limit7 = l7;
+        if (l8 > 0)
+            limit8 = l8;
+        if (l9 > 0)
+            limit9 = l9;
+        if (max > 1)
+            maxFee = max;
+        if (inmax >= 3)
+            inmax =_inmax;
     }
 }
 

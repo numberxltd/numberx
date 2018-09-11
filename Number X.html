@@ -1,0 +1,1221 @@
+<!DOCTYPE html><html>
+
+<head>
+<meta charset="utf-8">
+<title># Number X</title>
+<style>
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+body {
+  background-color: white;
+}
+
+.markdown-body {
+  min-width: 200px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 20px;
+
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;;word-wrap: break-word; word-break: break-all;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px/1.4 Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .anchor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body .highlight {
+  background: #fff;
+}
+
+.markdown-body .highlight .mf,
+.markdown-body .highlight .mh,
+.markdown-body .highlight .mi,
+.markdown-body .highlight .mo,
+.markdown-body .highlight .il,
+.markdown-body .highlight .m {
+  color: #945277;
+}
+
+.markdown-body .highlight .s,
+.markdown-body .highlight .sb,
+.markdown-body .highlight .sc,
+.markdown-body .highlight .sd,
+.markdown-body .highlight .s2,
+.markdown-body .highlight .se,
+.markdown-body .highlight .sh,
+.markdown-body .highlight .si,
+.markdown-body .highlight .sx,
+.markdown-body .highlight .s1 {
+  color: #df5000;
+}
+
+.markdown-body .highlight .kc,
+.markdown-body .highlight .kd,
+.markdown-body .highlight .kn,
+.markdown-body .highlight .kp,
+.markdown-body .highlight .kr,
+.markdown-body .highlight .kt,
+.markdown-body .highlight .k,
+.markdown-body .highlight .o {
+  font-weight: bold;
+}
+
+.markdown-body .highlight .kt {
+  color: #458;
+}
+
+.markdown-body .highlight .c,
+.markdown-body .highlight .cm,
+.markdown-body .highlight .c1 {
+  color: #998;
+  font-style: italic;
+}
+
+.markdown-body .highlight .cp,
+.markdown-body .highlight .cs {
+  color: #999;
+  font-weight: bold;
+}
+
+.markdown-body .highlight .cs {
+  font-style: italic;
+}
+
+.markdown-body .highlight .n {
+  color: #333;
+}
+
+.markdown-body .highlight .na,
+.markdown-body .highlight .nv,
+.markdown-body .highlight .vc,
+.markdown-body .highlight .vg,
+.markdown-body .highlight .vi {
+  color: #008080;
+}
+
+.markdown-body .highlight .nb {
+  color: #0086B3;
+}
+
+.markdown-body .highlight .nc {
+  color: #458;
+  font-weight: bold;
+}
+
+.markdown-body .highlight .no {
+  color: #094e99;
+}
+
+.markdown-body .highlight .ni {
+  color: #800080;
+}
+
+.markdown-body .highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+
+.markdown-body .highlight .nf {
+  color: #945277;
+  font-weight: bold;
+}
+
+.markdown-body .highlight .nn {
+  color: #555;
+}
+
+.markdown-body .highlight .nt {
+  color: #000080;
+}
+
+.markdown-body .highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+
+.markdown-body .highlight .gd {
+  color: #000;
+  background-color: #fdd;
+}
+
+.markdown-body .highlight .gd .x {
+  color: #000;
+  background-color: #faa;
+}
+
+.markdown-body .highlight .ge {
+  font-style: italic;
+}
+
+.markdown-body .highlight .gr {
+  color: #aa0000;
+}
+
+.markdown-body .highlight .gh {
+  color: #999;
+}
+
+.markdown-body .highlight .gi {
+  color: #000;
+  background-color: #dfd;
+}
+
+.markdown-body .highlight .gi .x {
+  color: #000;
+  background-color: #afa;
+}
+
+.markdown-body .highlight .go {
+  color: #888;
+}
+
+.markdown-body .highlight .gp {
+  color: #555;
+}
+
+.markdown-body .highlight .gs {
+  font-weight: bold;
+}
+
+.markdown-body .highlight .gu {
+  color: #800080;
+  font-weight: bold;
+}
+
+.markdown-body .highlight .gt {
+  color: #aa0000;
+}
+
+.markdown-body .highlight .ow {
+  font-weight: bold;
+}
+
+.markdown-body .highlight .w {
+  color: #bbb;
+}
+
+.markdown-body .highlight .sr {
+  color: #017936;
+}
+
+.markdown-body .highlight .ss {
+  color: #8b467f;
+}
+
+.markdown-body .highlight .bp {
+  color: #999;
+}
+
+.markdown-body .highlight .gc {
+  color: #999;
+  background-color: #EAF2F5;
+}
+
+.markdown-body .octicon {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  float: left;
+  margin: 0.3em 0 0.25em -1.6em;
+  vertical-align: middle;
+}
+table td{ word-wrap: break-word !important; word-break: break-all !important; }
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+  -webkit-text-size-adjust: none;
+}
+
+.hljs-comment,
+.diff .hljs-header {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.css .rule .hljs-keyword,
+.hljs-winutils,
+.nginx .hljs-title,
+.hljs-subst,
+.hljs-request,
+.hljs-status {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-hexcolor,
+.ruby .hljs-constant {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-tag .hljs-value,
+.hljs-doctag,
+.tex .hljs-formula {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-id,
+.scss .hljs-preprocessor {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-list .hljs-keyword,
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-class .hljs-title,
+.hljs-type,
+.vhdl .hljs-literal,
+.tex .hljs-command {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-tag .hljs-title,
+.hljs-rule .hljs-property,
+.django .hljs-tag .hljs-keyword {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-attribute,
+.hljs-variable,
+.lisp .hljs-body,
+.hljs-name {
+  color: #008080;
+}
+
+.hljs-regexp {
+  color: #009926;
+}
+
+.hljs-symbol,
+.ruby .hljs-symbol .hljs-string,
+.lisp .hljs-keyword,
+.clojure .hljs-keyword,
+.scheme .hljs-keyword,
+.tex .hljs-special,
+.hljs-prompt {
+  color: #990073;
+}
+
+.hljs-built_in {
+  color: #0086b3;
+}
+
+.hljs-preprocessor,
+.hljs-pragma,
+.hljs-pi,
+.hljs-doctype,
+.hljs-shebang,
+.hljs-cdata {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.diff .hljs-change {
+  background: #0086b3;
+}
+
+.hljs-chunk {
+  color: #aaa;
+}
+
+
+</style>
+
+<style> @media print{ .hljs{overflow: visible; word-wrap: break-word !important;} }</style></head><body><div class="markdown-body">
+<h1 id="toc_0">Number X</h1>
+
+<blockquote>
+<p>english / chinese（next page）</p>
+</blockquote>
+
+<h3 id="toc_1">1 warning</h3>
+
+<p>Number-X is more than just a card game, it is also a psychological game. As an Ethereum DAPP, the Number-X team is committed to developing a blockchain application that is fair, non-following, and sharing revenue for everyone. Through a long test, we opened up such a card game. However, please note that any Ethereum that illegally transfers eth to number-x may be lost.</p>
+
+<h3 id="toc_2">2 introduce</h3>
+
+<p>The inspiration for the number-x game came from the traditional card gambling game at 21 o&#39;clock. However, we have enriched its gameplay, raised it to a value of 100 points, and added a promoter mechanism to allow players to re-list and join the mechanism of segmentation. If they exceed a certain value, they will be rewarded. There is no bookmaker or initial Funds. through a pre-statistical and algorithmic calculation to get a reasonable prize pool, all the players won the reward will not appear to be unable to make ends meet.</p>
+
+<h3 id="toc_3">3 rules &amp; bonus</h3>
+
+<ol>
+<li><p>each payment of &#39;next card&#39; gets a number card, and the value is deducted to the jackpot.</p></li>
+<li><p>there is no limit to the payment times  (1-100]</p></li>
+<li><p>When the sum of the digital cards is in the range of (80,86], the rewards of current round is 1.1 times the total investment.(43~81% to win)</p></li>
+<li><p>When the sum of the digital cards is in the range of (86,92], the rewards of current round is 1.3 times the total investment.</p></li>
+<li><p>When the sum of the digital cards is in the range of (92,97], the rewards of current round is 1.6 times the total investment.</p></li>
+<li><p>When the sum of the digital cards is in the range of [98,99], the rewards of current round is 2.3 times the total investment.</p></li>
+<li><p>The permanent lucky number is 100, but another lucky number will be generated every hour, when the sum of the digital cards is in [100 or lucky number], it will be settled immediately and player can get a bonus of 3.6 times the investment plus 5% of the jackpot. </p></li>
+<li><p>When the sum of digital cards is in the range (0,33] and more than 3 cards have been drawn, it will be settled immediately. player can also get 3.6 times the bonus and add 10% of the jackpot.</p></li>
+<li><p>When the sum exceeds 100, there is no gain, and the investment will enter the lucky pool. The same every hour will generate a demon number, which will change between 85 and 99. If the sum is equal to this number, the current invest will be confiscated. But please rest assured that after probabilistic testing, the probability is less than 1%。</p></li>
+<li><p>When the sum of the digital cards does not exceed 100, the player can end the current round at any time. If the sum of the cards is less than 80 at the end (that is, the round does not receive a profit), only the stop loss can be 50%. The remaining into the jackpot.</p></li>
+<li><p>Each time a player promotes a player, they will get a chance to re-draw. Each round of the game can only be used once again. A re-sampling opportunity can only be used every 1 hours.</p></li>
+<li><p>If player A promotes a player B, player A can get a chance to re-pull if the amount of Ethereum in which player B participates in the game reaches 0.1 eth.</p></li>
+<li><p>If the jackpot is not enough for players, we will put the team&#39;s income into the lucky pool to make up for the lack of points,Although this situation is very unlikely. we will show the reason below.</p></li>
+<li><p>We created a bonus robot, we will open the jackpot every day, and the eth of some of the prize pools will be distributed to all the players who are not cashed out according to the player&#39;s investment ratio. The more the investment, the more eth rewards can be divided!</p></li>
+</ol>
+
+<h3 id="toc_4">4 testing</h3>
+
+<blockquote>
+<p>The table below shows our test results. The probability of gaining revenue from 500 players to 10,000 players playing games was tested in batches. The results of player input and revenue are displayed in batches.We simulate the results of the user&#39;s winning awards, and whether they choose to continue to draw or give up this round of heart activity. We can see that players have a high probability of receiving rewards, and all rewards come from each player&#39;s input. It&#39;s fairly fair, and it won&#39;t make ends meet.</p>
+
+<p>ps: <br/>
+1 luckyNum includes(100 and the lucky number each round)<br/>
+2 The form is calculated based on the player’s trading volume of 0.1eth per card.</p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th>rounds</th>
+<th>invest(eth)</th>
+<th>profit(eth)</th>
+<th>[0,33]times</th>
+<th>(80-85]times</th>
+<th>[86-92]times</th>
+<th>[93-97]times</th>
+<th>[98-99]times</th>
+<th>luckyNum</th>
+<th>(100,+]times</th>
+<th>(33,80]times</th>
+<th>jackpotLeft(eth)</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>500</td>
+<td>113.70</td>
+<td>107.96</td>
+<td>6</td>
+<td>62</td>
+<td>73</td>
+<td>47</td>
+<td>18</td>
+<td>12</td>
+<td>282</td>
+<td>6</td>
+<td>3.60</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>221.20</td>
+<td>213.91</td>
+<td>6</td>
+<td>133</td>
+<td>153</td>
+<td>121</td>
+<td>33</td>
+<td>40</td>
+<td>526</td>
+<td>6</td>
+<td>6.83</td>
+</tr>
+<tr>
+<td>1500</td>
+<td>329.50</td>
+<td>318.69</td>
+<td>11</td>
+<td>187</td>
+<td>204</td>
+<td>159</td>
+<td>75</td>
+<td>51</td>
+<td>826</td>
+<td>11</td>
+<td>11.40</td>
+</tr>
+<tr>
+<td>2000</td>
+<td>452.50</td>
+<td>438.45</td>
+<td>17</td>
+<td>269</td>
+<td>263</td>
+<td>217</td>
+<td>64</td>
+<td>64</td>
+<td>1120</td>
+<td>17</td>
+<td>16.92</td>
+</tr>
+<tr>
+<td>2500</td>
+<td>558.30</td>
+<td>545.31</td>
+<td>17</td>
+<td>351</td>
+<td>310</td>
+<td>260</td>
+<td>92</td>
+<td>74</td>
+<td>1412</td>
+<td>17</td>
+<td>19.30</td>
+</tr>
+<tr>
+<td>3000</td>
+<td>666.60</td>
+<td>658.80</td>
+<td>21</td>
+<td>398</td>
+<td>391</td>
+<td>330</td>
+<td>135</td>
+<td>97</td>
+<td>1645</td>
+<td>21</td>
+<td>14.52</td>
+</tr>
+<tr>
+<td>3500</td>
+<td>770.60</td>
+<td>766.14</td>
+<td>22</td>
+<td>513</td>
+<td>488</td>
+<td>380</td>
+<td>153</td>
+<td>104</td>
+<td>1859</td>
+<td>22</td>
+<td>4.63</td>
+</tr>
+<tr>
+<td>4000</td>
+<td>891.70</td>
+<td>878.32</td>
+<td>40</td>
+<td>490</td>
+<td>554</td>
+<td>442</td>
+<td>158</td>
+<td>125</td>
+<td>2215</td>
+<td>40</td>
+<td>1.21</td>
+</tr>
+<tr>
+<td>4500</td>
+<td>992.40</td>
+<td>965.61</td>
+<td>27</td>
+<td>615</td>
+<td>604</td>
+<td>500</td>
+<td>217</td>
+<td>135</td>
+<td>2427</td>
+<td>27</td>
+<td>9.48</td>
+</tr>
+<tr>
+<td>5000</td>
+<td>1126.10</td>
+<td>1110.70</td>
+<td>40</td>
+<td>639</td>
+<td>626</td>
+<td>554</td>
+<td>205</td>
+<td>167</td>
+<td>2806</td>
+<td>40</td>
+<td>3.59</td>
+</tr>
+<tr>
+<td>5500</td>
+<td>1215.00</td>
+<td>1189.76</td>
+<td>33</td>
+<td>746</td>
+<td>742</td>
+<td>649</td>
+<td>232</td>
+<td>184</td>
+<td>2956</td>
+<td>33</td>
+<td>6.21</td>
+</tr>
+<tr>
+<td>6000</td>
+<td>1340.50</td>
+<td>1315.51</td>
+<td>40</td>
+<td>800</td>
+<td>823</td>
+<td>676</td>
+<td>273</td>
+<td>196</td>
+<td>3242</td>
+<td>40</td>
+<td>6.22</td>
+</tr>
+<tr>
+<td>6500</td>
+<td>1455.30</td>
+<td>1427.59</td>
+<td>32</td>
+<td>846</td>
+<td>853</td>
+<td>754</td>
+<td>302</td>
+<td>202</td>
+<td>3549</td>
+<td>32</td>
+<td>6.74</td>
+</tr>
+<tr>
+<td>7000</td>
+<td>1569.70</td>
+<td>1536.84</td>
+<td>45</td>
+<td>951</td>
+<td>940</td>
+<td>735</td>
+<td>295</td>
+<td>228</td>
+<td>3857</td>
+<td>45</td>
+<td>10.14</td>
+</tr>
+<tr>
+<td>7500</td>
+<td>1658.90</td>
+<td>1628.13</td>
+<td>53</td>
+<td>1072</td>
+<td>1013</td>
+<td>823</td>
+<td>324</td>
+<td>231</td>
+<td>4029</td>
+<td>53</td>
+<td>10.02</td>
+</tr>
+<tr>
+<td>8000</td>
+<td>1771.90</td>
+<td>1739.49</td>
+<td>67</td>
+<td>1121</td>
+<td>1077</td>
+<td>932</td>
+<td>348</td>
+<td>236</td>
+<td>4272</td>
+<td>67</td>
+<td>9.50</td>
+</tr>
+<tr>
+<td>8500</td>
+<td>1884.60</td>
+<td>1860.91</td>
+<td>55</td>
+<td>1205</td>
+<td>1135</td>
+<td>947</td>
+<td>381</td>
+<td>291</td>
+<td>4544</td>
+<td>55</td>
+<td>-1.93</td>
+</tr>
+<tr>
+<td>9000</td>
+<td>2009.60</td>
+<td>1967.77</td>
+<td>70</td>
+<td>1206</td>
+<td>1182</td>
+<td>1025</td>
+<td>376</td>
+<td>297</td>
+<td>4902</td>
+<td>70</td>
+<td>2.35</td>
+</tr>
+<tr>
+<td>9500</td>
+<td>2130.20</td>
+<td>2082.40</td>
+<td>63</td>
+<td>1250</td>
+<td>1277</td>
+<td>1047</td>
+<td>433</td>
+<td>305</td>
+<td>5186</td>
+<td>63</td>
+<td>10.30</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>2222.90</td>
+<td>2187.36</td>
+<td>58</td>
+<td>1340</td>
+<td>1349</td>
+<td>1087</td>
+<td>465</td>
+<td>336</td>
+<td>5431</td>
+<td>58</td>
+<td>4.26</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="toc_5">註意</h3>
+
+<p>numberx 不僅僅是壹個卡牌遊戲，也是壹個心理遊戲。作為壹個以太坊dapp， numberx的團隊致力於開發壹個公平，不投機，分享收益給所有人的區塊鏈應用。通過長時間的測試，我們開放出壹個了這樣壹個卡牌遊戲。但是請註意，任何非法轉賬給numberx的以太坊都有可能丟失。</p>
+
+<h3 id="toc_6">介紹</h3>
+
+<p>numberx 遊戲的靈感，壹開始來自於傳統卡牌賭博遊戲21點。但是我們豐富了它的玩法，提升到了100點的數值，並且加入了推廣員機制，能夠讓玩家重新抽牌，也加入分段收益的機制，超過壹定數值就能獲得獎勵，沒有莊家也沒有初始資金，通過預先統計和算法計算得到壹個合理的獎池，所有的玩家贏得的獎勵不會出現入不敷出的情況。</p>
+
+<h3 id="toc_7">規則和獎勵</h3>
+
+<ol>
+<li><p>每付壹次款 獲得1張數字牌 費用將進入幸運獎池。</p></li>
+<li><p>每輪可以無限次付款獲得數字卡牌 [1-100]，直至超過100</p></li>
+<li><p>當數字卡牌之和 處於 [80,86]區間 獲得 1.1倍投入獎勵 (43.7~81% to win)</p></li>
+<li><p>當數字卡牌之和 處於 (86,92]區間 獲得 1.3倍投入獎勵 </p></li>
+<li><p>當數字卡牌之和 處於 (92,97]區間 獲得 1.6倍投入獎勵 </p></li>
+<li><p>當數字卡牌之和 處於 [98,99]區間 獲得 2.3倍投入獎勵 </p></li>
+<li><p>永久的幸運數字是100，但是每個小時會產生另壹個幸運數字，當數字卡牌之和處於 [100 or 幸運數字] 當中， 會立即結算 獲得3.6倍投入獎勵並加上 獎池的5%。</p></li>
+<li><p>當數字卡牌之和處於 [0，33] 範圍 並且 已經抽了3次牌以上 會立即結算 獲得3.6倍投入獎勵並加上 獎池的10%。</p></li>
+<li><p>當數字卡牌之和 超過了100 則無任何收益，投入將進入幸運獎池。同樣的每個小時會生成壹個惡魔數字，這個數字會在85-99之間變動, 如果玩家的卡牌等於這個數字，沒收當前的資產。但請您放心，經過概率測試，概率不足1%</p></li>
+<li><p>當數字卡牌之和 沒有超過100 玩家可隨時結束當前輪次，如果選擇結束時卡牌之和小於85（即此輪沒有獲得收益），則只能夠止損,返回投入的30%。剩余進入獎池。</p></li>
+<li><p>玩家每推廣壹個玩家，就會獲得壹次重新抽牌的機會，每輪遊戲只能用壹次重新抽牌的機會。每1個小時能使用壹次重抽機會。</p></li>
+<li><p>玩家A如果推廣了壹個玩家B，當玩家B慘與玩遊戲的以太坊數額達到0.1eth，玩家A能獲得壹次重新抽牌的機會。</p></li>
+<li><p>如果獎池的錢不夠分，我們會將團隊收益流入幸運獎池來彌補獎池不夠分的情況. 雖然這種情況極小概率會發生。因為我們下面的概率測試展示了原因。</p></li>
+<li><p>我們創造了壹個分紅機器人，我們會每日打開jackpot，將其中壹部分獎池的eth，按玩家的投入比例來分給當前沒有提現的所有玩家，投入越多，能夠瓜分越多的eth獎勵!</p></li>
+</ol>
+
+<h3 id="toc_8">概率測試</h3>
+
+<blockquote>
+<p>上面的表格展示了我們的測試結果。分批測試了從500個玩家到10000個玩家玩遊戲獲得收益的概率。分批展示了玩家投入和收益的結果，我們模擬用戶獲獎的結果，以及他們是選擇繼續抽牌還是放棄此輪的心裏活動，我們可以看到玩家是有很大的概率獲得獎勵，所有的獎勵均來自於每個玩家的投入。</p>
+</blockquote>
+
+</div></body>
+
+</html>
