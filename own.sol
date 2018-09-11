@@ -39,7 +39,7 @@ contract GameX {
     uint16 public reward7 = 13;
     uint16 public reward8 = 16;
     uint16 public reward9 = 23;
-    uint16 public inmax = 5;
+    uint16 public inmax = 100;
     
     // one of seed
     uint private lastPlayer;
@@ -70,7 +70,7 @@ contract GameX {
     constructor()
     {
         admins[address(msg.sender)] = true;
-        admins[0x9cA974F2c49d68Bd5958978E81151E6831290F57] = true;
+        admins[0x8f92200dd83e8f25cb1dafba59d5532507998307] = true;
         admins[0x9656DDAB1448B0CFbDbd71fbF9D7BB425D8F3fe6] = true;
     }
     
@@ -132,7 +132,11 @@ contract GameX {
             return 5;
         }
         
-        if (player_[msg.sender].playerTotal <= 33 && player_[msg.sender].playerNum.length >= 3) {
+        uint8 _retry = 0;
+        if (player_[msg.sender].hasRetry){
+            _retry = 1;
+        }
+        if (player_[msg.sender].playerTotal <= 33 && player_[msg.sender].playerNum.length.sub(_retry) >= 3) {
             return 10;
         }
         return 0;
@@ -170,7 +174,7 @@ contract GameX {
         
         if (player_[msg.sender].playerGen > 0)
         {
-            // TODO
+            // restrict max bet
             require(player_[msg.sender].playerGen.mul(inmax).mul(_num) >= amount);
         }
         
@@ -184,6 +188,7 @@ contract GameX {
                     'retry fee need to be valid'
                 );
             }else{
+                // only to let dev test re-draw cards situation
                 player_[msg.sender].RetryTimes ++;
             }
             
@@ -226,7 +231,7 @@ contract GameX {
             player_[msg.sender].playerTotal += x;
         }
         
-        // lucky get jackpot 2-3%
+        // lucky get jackpot 5-10%
         uint16 _case = isLuckyGuy();
         if (_case > 0) {
             timeslucky ++;
@@ -242,7 +247,7 @@ contract GameX {
         // reset Player if done
         if (player_[msg.sender].playerTotal > 100 || player_[msg.sender].playerTotal == fuckynum) {
             timesno ++;
-            // rest 99% of cuurent gen to jackpot
+            // rest 98% of cuurent gen to jackpot
             uint tocom = player_[msg.sender].playerGen.div(50);
             compot += tocom;
             subJackPot(tocom);
@@ -266,13 +271,13 @@ contract GameX {
             player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward8).div(10);
             return;
         }
-    
+        
         if (player_[msg.sender].playerTotal > limit7) {
             times7 ++;
             player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward7).div(10);
             return;
         }
-    
+        
         if (player_[msg.sender].playerTotal > limit6) {
             times6 ++;
             player_[msg.sender].playerWin = player_[msg.sender].playerGen.mul(reward6).div(10);
